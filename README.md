@@ -11,3 +11,6 @@ release date is uncertain until reached stable state
 
 
 pre-releases will probably come out soon dont expect much
+
+
+HORRIBLE english incoming (spare my life)
