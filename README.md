@@ -24,8 +24,8 @@ press anywhere on the screen or any button (except power) to show the other opti
 
 ---
 ## (temp) How to Install
-You simply download the boot image from the "Releases" section
-In TWRP do this (other recoveries may work but they are untested)
+You simply download the boot image from the "Releases" section then
+in TWRP do this (other recoveries may work but they are untested)
 
 ```
 TWRP --> Install --> Install image --> (The linux boot image) --> Boot
