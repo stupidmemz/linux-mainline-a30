@@ -18,6 +18,23 @@ it reports itself as linux-6.15-rc1-exynos7870-dirty
 there were other stuff at the name but its pretty long and i dont wanna bother checking it
 as it will be renamed anyway
 
+theres a known bug where the preboot menu only shows Continue boot or just Boot
+
+press anywhere on the screen or any button (except power) to show the other options
+
+---
+(temp) How to Install
+You simply download the boot image from the "Releases" section
+In TWRP do this (other recoveries may work but they are untested)
+
+```
+TWRP --> Install --> Install image --> (The linux boot image) --> Boot
+```
+And simply swipe to Flash
+
+Reboot and it should boot the kernel
+
+
 ---
 
 ## What is this?
