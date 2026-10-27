@@ -148,7 +148,7 @@ The kernel will carry that tag in its version string.
   off the phone. EFS holds your IMEI and radio calibration and is painful to lose.
 - Unlocking the bootloader trips Knox and wipes the phone.
 - Have a way back: TWRP and a known-good `boot.img` that your recovery can actually read.
-  A USB data cable plus Odin is the real safety net.
+  A USB data cable plus Odin is a good safety net to have .
 - Everything here is experimental. A wrong flash can leave the phone unbootable. Use at your own risk.
 - Never commit or share backups: they contain your IMEI and may contain keys and passwords.
 
