@@ -10,6 +10,14 @@ pre-releases will probably come out soon, don't expect much
 
 HORRIBLE english incoming (spare my life)
 
+## Notes
+early uploaded versions such as 0.9-PRIMARY are not named when booted yet
+
+it reports itself as linux-6.15-rc1-exynos7870-dirty
+
+there were other stuff at the name but its pretty long and i dotnt wanna bother checking it
+as it will be renamed anyway
+
 ---
 
 ## What is this?
