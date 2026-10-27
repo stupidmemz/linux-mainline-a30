@@ -23,7 +23,7 @@ theres a known bug where the preboot menu only shows Continue boot or just Boot
 press anywhere on the screen or any button (except power) to show the other options
 
 ---
-(temp) How to Install
+## (temp) How to Install
 You simply download the boot image from the "Releases" section
 In TWRP do this (other recoveries may work but they are untested)
 
