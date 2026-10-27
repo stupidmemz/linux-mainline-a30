@@ -22,7 +22,7 @@ theres a known bug where the preboot menu only shows Continue boot or just Boot
 
 press anywhere on the screen or any button (except power) to show the other options
 
-also this will work with ANY linux distro you prefer (hopefully)
+also this should work with ANY linux distro you prefer (hopefully)
 as long as they have rootfs download support ( and support arm64 in general)
 
 ---
