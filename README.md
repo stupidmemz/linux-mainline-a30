@@ -1,14 +1,22 @@
 # linux-mainline-exynos7885
 
-The (probably) first mainline Linux port to devices nobody cares about
 
-⚠️ This project is still a work in progress, and so is this page.
 
-There is no stable release yet and the release date is uncertain. Pre-releases will come out
+## ⚠️ Read this before flashing anything
+
+- This replaces the **boot** partition. Back up **boot**, **recovery** and **EFS** first, and keep the copies
+  off the phone. EFS holds your IMEI and radio calibration and is gonna suck to lose.
+- Unlocking the bootloader trips Knox and wipes the phone.
+- Have a way back: TWRP and a known-good `boot.img` that your recovery can actually read.
+  A USB data cable and Odin are a good safety net to have.
+- Everything here is experimental. A wrong flash can leave the phone unbootable. Use at your own risk.
+- I'm not responsible for breaking devices, thermonuclear war and such.
+- Never share your backups: they contain your IMEI and may contain keys and passwords.
+-⚠️ This project is still a work in progress, and so is this page.
+-There is no stable release yet and the release date is uncertain. Pre-releases will come out
 now and then, but don't expect much from them.
-
-HORRIBLE english incoming (spare my life)
-
+-English is my second language you may see mistakes.
+-Some information may not always be correct i recommend double checking this as i'm writing this very late.
 ---
 
 ## What is this?
@@ -24,11 +32,12 @@ In theory any arm64 distro with a downloadable rootfs should work. So far an Ope
 (it reaches a text login) and a systemd rootfs both start their init. None has a working desktop yet.
 
 ## Quick install (temporary instructions)
+1. **Read
 
-1. **Back up first.** Read the warning at the bottom of this page. At minimum back up your current
+2. **Back up first.** Read the warning at the bottom of this page. At minimum back up your current
    `boot` partition (in TWRP: Backup, tick Boot only), and keep a copy off the phone.
-2. Download the boot image (`.img`) from the **Releases** section and copy it to the phone.
-3. Boot into TWRP (other recoveries may work, but they are untested) and flash it:
+3. Download the boot image (`.img`) from the **Releases** section and copy it to the phone.
+4. Boot into TWRP (other recoveries may work, but they are untested) and flash it:
 
 ```
 TWRP -> Install -> Install Image -> (the Linux boot image) -> select the "Boot" partition -> swipe to flash
@@ -168,15 +177,7 @@ Every image is labelled so you always know what you are running:
 
 The kernel will carry that tag in its version string.
 
-## ⚠️ Read this before flashing anything
-
-- This replaces the **boot** partition. Back up **boot**, **recovery** and **EFS** first, and keep the copies
-  off the phone. EFS holds your IMEI and radio calibration and is painful to lose.
-- Unlocking the bootloader trips Knox and wipes the phone.
-- Have a way back: TWRP and a known-good `boot.img` that your recovery can actually read.
-  A USB data cable and Odin are a good safety net to have.
-- Everything here is experimental. A wrong flash can leave the phone unbootable. Use at your own risk.
-- Never share your backups: they contain your IMEI and may contain keys and passwords.
+---
 
 ## Credits
 
@@ -185,8 +186,9 @@ The kernel will carry that tag in its version string.
 - **ivoszbg / uniLoader** and **faveoled**, who wrote the A30 board file
 - **The postmarketOS Exynos 7885 mainlining notes**, which this whole approach follows
 - **Eureka kernel** (Samsung downstream source): used as a reference for the device tree, the touch protocol and the hardware wiring
+- **Claude AI** For fixing bugs i cannot fix for the life of me, drivers and planning
 
-## Help wanted
+##  Future version plans
 
 - A driver for the Samsung S2MU106 PMIC (battery, charger, regulators)
 - A display panel driver for the A30's AMOLED, so brightness and blanking work
