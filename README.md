@@ -140,13 +140,12 @@ You will need to make termux have root permissions and type `tsu` or `su`
 i recommend `tsu` because it's far easier to use
 
 ```
+pkg ionstall tsu
 tsu --> mkdir /data/linux/rootfs
-
 ```
 Install tar with
 ```
 pkg install tar
-
 ```
 Unpack the rootfs with **real `tar` as root** (for example from Termux with root)
 then put your rootfs in "Download"
