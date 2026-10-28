@@ -1,53 +1,50 @@
-# linux-mainline-exynos7885
-
 The (probably) first mainline Linux port to devices nobody cares about
 
-⚠️ this project is still WIP, same with this page
+⚠️ This project is still a work in progress, and so is this page.
 
-release date is uncertain until it reaches a stable state
-
-pre-releases will probably come out soon, don't expect much
+There is no stable release yet and the release date is uncertain. Pre-releases will come out
+now and then, but don't expect much from them.
 
 HORRIBLE english incoming (spare my life)
-
-## Notes
-early uploaded versions such as 0.9-PRIMARY are not named when booted yet
-
-it reports itself as linux-6.15-rc1-exynos7870-dirty
-
-there were other stuff at the name but its pretty long and i dont wanna bother checking it
-as it will be renamed anyway
-
-theres a known bug where the preboot menu only shows Continue boot or just Boot
-
-press anywhere on the screen or any button (except power) to show the other options
-
-also this should work with ANY linux distro you prefer (hopefully)
-as long as they have rootfs download support ( and support arm64 in general)
-
----
-## (temp) How to Install
-You simply download the boot image from the "Releases" section after you download the image
-Boot TWRP and do this (other recoveries may work but they are untested)
-
-```
-TWRP --> Install --> Install image --> (The linux boot image) --> Boot
-```
-And simply swipe to Flash
-
-Reboot and it should boot the kernel
-
 
 ---
 
 ## What is this?
 
-A mainline Linux (not Android's downstream 4.4 kernel) bring-up for the **Samsung Galaxy A30**
+A mainline Linux bring-up (not Android's downstream 4.4 kernel) for the **Samsung Galaxy A30**
 (SM-A305F/DS) and, hopefully one day, the rest of the Exynos 7885 family (A10, A20, A20e, A30s, A40...).
 
 Right now it boots a real mainline kernel on the phone, shows a console on the screen, reads the
 buttons and the touchscreen, talks to the eMMC, and can hand over to a root filesystem stored on the
-phone. It does **not** yet start a desktop. See the tables below.
+phone. It does **not** start a desktop yet. See the tables below.
+
+In theory any arm64 distro with a downloadable rootfs should work. So far an OpenRC rootfs
+(it reaches a text login) and a systemd rootfs both start their init. None has a working desktop yet.
+
+## Quick install (temporary instructions)
+
+1. **Back up first.** Read the warning at the bottom of this page. At minimum back up your current
+   `boot` partition (in TWRP: Backup, tick Boot only), and keep a copy off the phone.
+2. Download the boot image (`.img`) from the **Releases** section and copy it to the phone.
+3. Boot into TWRP (other recoveries may work, but they are untested) and flash it:
+
+```
+TWRP -> Install -> Install Image -> (the Linux boot image) -> select the "Boot" partition -> swipe to flash
+```
+
+4. Reboot. The phone should now start the kernel and show the pre-boot menu.
+
+To go back to Android, flash your backed-up `boot.img` the same way (select the **Boot** partition again).
+
+## Known issues and notes
+
+- **The pre-boot menu may only show "Continue boot" (or just "Boot").** Tap anywhere on the screen, or
+  press any button except power, to show the other options.
+- **The kernel version string is not final.** Early releases such as `0.9-PRIMARY` do not show their own
+  name when booting yet. The kernel still reports itself as `6.15.0-rc1-exynos7870-dirty`: it inherits that
+  suffix from the base tree, and `-dirty` means it was built from a tree with uncommitted changes. It will be
+  renamed.
+- Releases follow the naming in [Build conventions](#build-conventions) below.
 
 ## Tested on
 
@@ -71,26 +68,26 @@ Other Exynos 7885 phones and other ROMs are **untested**.
 | All 8 CPU cores | |
 | All 4 GB of RAM | three memory banks, see the hardware notes |
 | Buttons | volume up / volume down / power, through `gpio-keys` on `gpa1` |
-| Touchscreen | Melfas MIP4 (MSS100 firmware). Needs a one-line-ish patch to the mainline `melfas_mip4` driver: this firmware reports packet "event format 8" |
+| Touchscreen | Melfas MIP4 (MSS100 firmware). Needs a small patch to the mainline `melfas_mip4` driver, because this firmware reports packets in "event format 8" |
 | eMMC | the DesignWare MMC controller at `0x13500000`, running at the **safe legacy speed** |
-| Pre-boot menu (TUI) | see below |
-| Handing over to a rootfs | a root filesystem in a folder on `userdata` boots into its own init (OpenRC and systemd both reach a login prompt) |
+| Pre-boot menu | see below |
+| Handing over to a rootfs | a root filesystem in a folder on `userdata` boots into its own init (an OpenRC rootfs reaches a text login, a systemd rootfs starts its init) |
 | Power off / reboot | through the PMU |
 
 ### Doesn't work (yet)
 
 | Feature | Why |
 |---|---|
-| A graphical session / desktop | the system boots to a text login but no desktop starts. Not understood yet |
-| Faster eMMC modes (high-speed, DDR, HS200, HS400) | timing values from Samsung's tree use a different format than the mainline driver, not mapped yet |
+| Graphical session / desktop | the system boots to a text login, but no desktop starts. Not understood yet |
+| Faster eMMC modes (high-speed, DDR, HS200, HS400) | Samsung's timing values use a different format than the mainline driver, not mapped yet |
 | Display panel control (brightness, blanking) | no panel driver, the screen only works because the bootloader leaves it running |
 | GPU | no driver, everything is software rendered |
-| Battery / charging info | the PMIC (Samsung S2MU106 as far as I can tell) has no driver |
+| Battery / charging info | the PMIC (Samsung S2MU106, as far as I can tell) has no driver |
 | Wi-Fi, Bluetooth, modem, GPS | no drivers |
 | Audio, camera, sensors | no drivers |
 | USB | untested |
 | Suspend / sleep | untested |
-| "Reboot to recovery" | the menu entry exists but needs bootloader reboot-reason support |
+| "Reboot to recovery" | the menu entry exists, but it needs bootloader reboot-reason support |
 
 ### Harmless messages you will see in the log
 
@@ -107,9 +104,8 @@ Samsung bootloader -> boot partition = uniLoader image
     pre-boot menu -> (optional) Continue boot -> root filesystem in /data/linux/rootfs
 ```
 
-Android's own kernel is **not** in the boot partition while Linux is installed there.
-To get Android back you restore the original `boot.img` through TWRP
-(Install Image > `boot.img` > Boot).
+While Linux is installed in the boot partition, Android's own kernel is **not** there, so Android cannot start.
+Your Android data is untouched. To use Android again, restore the original `boot.img` through TWRP.
 
 ## The pre-boot menu
 
@@ -126,9 +122,9 @@ power selects, and the touchscreen works too.
 
 ## Putting a distro on it
 
-The Linux root filesystem lives in a folder on Android's `userdata` partition
-(`/data/linux/rootfs`), so there is no repartitioning, and Android keeps working. This needs `/data` to be
-readable from Linux, i.e. **not encrypted**. ROMs that encrypt `/data` are untested and probably will not work.
+The Linux root filesystem lives in a folder on Android's `userdata` partition (`/data/linux/rootfs`),
+so there is no repartitioning. This needs `/data` to be readable from Linux, so it must **not be encrypted**.
+ROMs that encrypt `/data` are untested and probably will not work.
 
 Unpack the rootfs with **real `tar` as root** (for example from Termux with root):
 
@@ -136,13 +132,13 @@ Unpack the rootfs with **real `tar` as root** (for example from Termux with root
 tar -xpf rootfs.tar.gz -C /data/linux/rootfs --numeric-owner
 ```
 
-Do **not** unpack it with a file manager or archive app. They refuse or rewrite the symlinks
+Do **not** unpack it with a file manager or an archive app. They refuse or rewrite symlinks
 ("dangerous symbolic links") and cannot keep root ownership, which silently breaks the rootfs.
 
 ## Hardware notes
 
 Everything here was read from Samsung's own device tree (decompiled from the dtb/dtbo partitions)
-and confirmed by running it. Revision 3 of the board (overlay `A30_SWA_OPEN_02`) is what I have.
+and confirmed by running it. Board revision 3 (overlay `A30_SWA_OPEN_02`) is what I have.
 
 | Thing | Value |
 |---|---|
@@ -151,15 +147,15 @@ and confirmed by running it. Revision 3 of the board (overlay `A30_SWA_OPEN_02`)
 | Reserved regions | TIMA `0xb8000000` (2 MB), sec_debug_magic `0x80000000` (4 KB), seclog `0xc0000000` (512 KB), wifi/bt `0xe9000000` (4 MB), abox `0xe9400000` (4 MB), modem `0xf5400000` (136 MB), cp ram log `0xfdc00000` (32 MB), gnss `0xffc00000` (4 MB) |
 | Keys | volume up `gpa1-5` (code 115), volume down `gpa1-6` (114), power `gpa1-7` (116) |
 | Touchscreen | Melfas MIP4/MSS100 on `i2c_4`, address `0x48`, interrupt `gpa0-0` (level low), supply regulator `tsp_ldo_en` on `gpg2-1` |
-| eMMC | `mmc@13500000`, 8-bit, non-removable, kernel command line needs `clk_ignore_unused` |
+| eMMC | `mmc@13500000`, 8-bit, non-removable, the kernel command line needs `clk_ignore_unused` |
 | Display panel controller | EA8076 (from the node names), no mainline driver |
 | Reset / poweroff | PMU registers via `syscon-reboot` and `syscon-poweroff` |
 
 ### The touchscreen patch
 
 Samsung's driver calls this layout `EVENT_FORMAT_WITH_PRESSURE_2BYTE` (format 8). It is the same as format 3,
-which mainline handles, except the force value is two bytes, so everything after x/y sits one byte later:
-`size = packet[7]`, `pressure = packet[8..9]`, `touch_major = packet[10]`, `touch_minor = packet[11]`.
+which mainline already handles, except that the force value is two bytes, so everything after x/y sits one
+byte later: `size = packet[7]`, `pressure = packet[8..9]`, `touch_major = packet[10]`, `touch_minor = packet[11]`.
 
 ## Build conventions
 
@@ -176,9 +172,9 @@ The kernel will carry that tag in its version string.
   off the phone. EFS holds your IMEI and radio calibration and is painful to lose.
 - Unlocking the bootloader trips Knox and wipes the phone.
 - Have a way back: TWRP and a known-good `boot.img` that your recovery can actually read.
-  A USB data cable plus Odin is a good safety net to have .
+  A USB data cable and Odin are a good safety net to have.
 - Everything here is experimental. A wrong flash can leave the phone unbootable. Use at your own risk.
-- Never commit or share backups: they contain your IMEI and may contain keys and passwords.
+- Never share your backups: they contain your IMEI and may contain keys and passwords.
 
 ## Credits
 
@@ -192,7 +188,7 @@ The kernel will carry that tag in its version string.
 
 - A driver for the Samsung S2MU106 PMIC (battery, charger, regulators)
 - A display panel driver for the A30's AMOLED, so brightness and blanking work
-- Figuring out why the distro does not start a desktop
+- Finding out why the distro does not start a desktop
 - Mapping Samsung's eMMC timing values to the mainline driver for the fast modes
 - Testing on other Exynos 7885 phones
 
