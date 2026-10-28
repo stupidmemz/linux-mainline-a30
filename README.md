@@ -187,6 +187,8 @@ The kernel will carry that tag in its version string.
 - **Eureka kernel** (Samsung downstream source): used as a reference for the device tree, the touch protocol and the hardware wiring
 - **Claude AI** For fixing bugs i cannot fix for the life of me, drivers and planning
 
+Without them the project wouldn't be possible
+
 ##  Future version plans
 
 - A driver for the Samsung S2MU106 PMIC (battery, charger, regulators)
