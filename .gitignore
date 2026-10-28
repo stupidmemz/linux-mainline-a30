@@ -1,0 +1,7 @@
+*.img
+*.tar
+*.tar.gz
+*.zip
+*.log
+*.orig*
+out/

@@ -1,0 +1,153 @@
+// SPDX-License-Identifier: GPL-2.0
+/dts-v1/;
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/linux-event-codes.h>
+#include "exynos7885.dtsi"
+
+/ {
+	model = "Samsung Galaxy A30";
+	compatible = "samsung,a30", "samsung,exynos7885";
+	chassis-type = "handset";
+
+	chosen {
+		#address-cells = <2>;
+		#size-cells = <1>;
+		ranges;
+		stdout-path = "fb0";
+
+		fb0: framebuffer@ec000000 {
+			compatible = "simple-framebuffer";
+			reg = <0x0 0xec000000 (1080 * 2340 * 4)>;
+			width = <1080>;
+			height = <2340>;
+			stride = <(1080 * 4)>;
+			format = "a8r8g8b8";
+		};
+	};
+
+	reserved-memory {
+		#address-cells = <2>;
+		#size-cells = <1>;
+		ranges;
+
+		framebuffer_region@ec000000 { reg = <0x0 0xec000000 0x1400000>; no-map; };
+		tima_region@b8000000        { reg = <0x0 0xb8000000 0x200000>;  no-map; };
+		sec_debug_magic@80000000    { reg = <0x0 0x80000000 0x1000>;    no-map; };
+		seclog_mem@c0000000         { reg = <0x0 0xc0000000 0x80000>;   no-map; };
+		wifibt_if@e9000000          { reg = <0x0 0xe9000000 0x400000>;  no-map; };
+		abox_rmem: memory@e9400000  { reg = <0x0 0xe9400000 0x400000>; };
+		modem_if@f5400000           { reg = <0x0 0xf5400000 0x8800000>; no-map; };
+		cp_ram_logging@fdc00000     { reg = <0x0 0xfdc00000 0x2000000>; no-map; };
+		gnss_if@ffc00000            { reg = <0x0 0xffc00000 0x400000>;  no-map; };
+	};
+
+	memory@80000000 {
+		device_type = "memory";
+		reg = <0x0 0x80000000 0x3bc00000>,
+		      <0x0 0xc0000000 0x40000000>,
+		      <0x8 0x80000000 0x80000000>;
+	};
+};
+
+&oscclk {
+	clock-frequency = <26000000>;
+};
+
+/ {
+	gpio-keys {
+		compatible = "gpio-keys";
+		pinctrl-names = "default";
+		pinctrl-0 = <&key_power &key_voldown &key_volup>;
+
+		key-power {
+			label = "Power";
+			linux,code = <KEY_POWER>;
+			gpios = <&gpa1 7 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+		};
+
+		key-voldown {
+			label = "Volume Down";
+			linux,code = <KEY_VOLUMEDOWN>;
+			gpios = <&gpa1 6 GPIO_ACTIVE_LOW>;
+		};
+
+		key-volup {
+			label = "Volume Up";
+			linux,code = <KEY_VOLUMEUP>;
+			gpios = <&gpa1 5 GPIO_ACTIVE_LOW>;
+		};
+	};
+};
+
+&pinctrl_alive {
+	key_power: key-power-pins {
+		samsung,pins = "gpa1-7";
+		samsung,pin-function = <EXYNOS_PIN_FUNC_EINT>;
+		samsung,pin-pud = <EXYNOS_PIN_PULL_NONE>;
+		samsung,pin-drv = <EXYNOS5420_PIN_DRV_LV1>;
+	};
+
+	key_voldown: key-voldown-pins {
+		samsung,pins = "gpa1-6";
+		samsung,pin-function = <EXYNOS_PIN_FUNC_EINT>;
+		samsung,pin-pud = <EXYNOS_PIN_PULL_NONE>;
+		samsung,pin-drv = <EXYNOS5420_PIN_DRV_LV1>;
+	};
+
+	key_volup: key-volup-pins {
+		samsung,pins = "gpa1-5";
+		samsung,pin-function = <EXYNOS_PIN_FUNC_EINT>;
+		samsung,pin-pud = <EXYNOS_PIN_PULL_NONE>;
+		samsung,pin-drv = <EXYNOS5420_PIN_DRV_LV1>;
+	};
+};
+
+/ {
+	tsp_ldo_en: regulator-tsp-ldo-en {
+		compatible = "regulator-fixed";
+		regulator-name = "tsp_ldo_en";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		gpios = <&gpg2 1 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+		regulator-always-on;
+		regulator-boot-on;
+	};
+};
+
+&pinctrl_alive {
+	touch_irq: touch-irq-pins {
+		samsung,pins = "gpa0-0";
+		samsung,pin-function = <EXYNOS_PIN_FUNC_EINT>;
+		samsung,pin-pud = <EXYNOS_PIN_PULL_NONE>;
+		samsung,pin-drv = <EXYNOS5420_PIN_DRV_LV1>;
+	};
+};
+
+&i2c_4 {
+	status = "okay";
+	samsung,i2c-sda-delay = <100>;
+	samsung,i2c-max-bus-freq = <400000>;
+
+	touchscreen@48 {
+		compatible = "melfas,mip4_ts";
+		reg = <0x48>;
+		interrupt-parent = <&gpa0>;
+		interrupts = <0 IRQ_TYPE_LEVEL_LOW>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&touch_irq>;
+	};
+};
+
+&mmc_0 {
+	status = "okay";
+	bus-width = <8>;
+	non-removable;
+	broken-cd;
+	no-sd;
+	no-sdio;
+	samsung,dw-mshc-ciu-div = <3>;
+	samsung,dw-mshc-sdr-timing = <0 4>;
+	samsung,dw-mshc-ddr-timing = <0 2>;
+};
