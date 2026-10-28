@@ -203,7 +203,7 @@ The kernel will carry that tag in its version string.
 - **Eureka kernel** (Samsung downstream source): used as a reference for the device tree, the touch protocol and the hardware wiring
 - **Claude AI** For fixing bugs i cannot fix for the life of me, drivers and planning
 
-Without them this project wouldn't be exist and be possible.
+Without them this project wouldn't exist and be possible.
 
 ##  Future version plans
 
