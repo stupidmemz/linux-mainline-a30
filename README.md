@@ -140,7 +140,7 @@ You will need to make termux have root permissions and type `tsu` or `su`
 i recommend `tsu` because it's far easier to use
 
 ```
-pkg ionstall tsu
+pkg install tsu
 tsu --> mkdir /data/linux/rootfs
 ```
 Install tar with
