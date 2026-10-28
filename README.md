@@ -1,4 +1,4 @@
-# linux-mainline-exynos7885
+# linux-mainline-a30
 
 
 
@@ -22,7 +22,7 @@ now and then, but don't expect much from them.
 ## What is this?
 
 A mainline Linux bring-up (not Android's downstream 4.4 kernel) for the **Samsung Galaxy A30**
-(SM-A305F/DS) and, hopefully one day, the rest of the Exynos 7885 family (A10, A20, A20e, A30s, A40...).
+(SM-A305F/DS) and maybe other variants.
 
 Right now it boots a real mainline kernel on the phone, shows a console on the screen, reads the
 buttons and the touchscreen, talks to the eMMC, and can hand over to a root filesystem stored on the
@@ -109,7 +109,7 @@ Other Exynos 7885 phones and other ROMs are **untested**.
 ## How it boots
 
 ```
-Samsung bootloader -> boot partition = uniLoader image
+Samsung bootloader (S-Boot) -> boot partition = uniLoader image
   uniLoader: kernel Image + A30 device tree + built-in initramfs (the pre-boot menu)
     pre-boot menu -> (optional) Continue boot -> root filesystem in /data/linux/rootfs
 ```
@@ -195,7 +195,6 @@ Without them this project wouldn't be exist and be possible.
 - A display panel driver for the A30's AMOLED, so brightness and blanking work
 - Finding out why the distro does not start a desktop
 - Mapping Samsung's eMMC timing values to the mainline driver for the fast modes
-- Testing on other Exynos 7885 phones
 
 ## License
 
