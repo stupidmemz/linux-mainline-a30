@@ -12,16 +12,12 @@
 - Everything here is experimental. A wrong flash can leave the phone unbootable. Use at your own risk.
 - I'm not responsible for breaking devices, thermonuclear war and such.
 - Never share your backups: they contain your IMEI and may contain keys and passwords.
-
--⚠️ This project is still a work in progress, and so is this page.
-
--There is no stable release yet and the release date is uncertain. Pre-releases will come out
+- ⚠️ This project is still a work in progress, and so is this page.
+- There is no stable release yet and the release date is uncertain. Pre-releases will come out
 now and then, but don't expect much from them.
+- English is my second language you may see mistakes.
+- Some information may not always be correct i recommend double checking this as i'm writing this very late.
 
--English is my second language you may see mistakes.
-
--Some information may not always be correct i recommend double checking this as i'm writing this very late.
----
 
 ## What is this?
 
