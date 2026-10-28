@@ -50,7 +50,7 @@ To go back to Android, flash your backed-up `boot.img` the same way (select the 
 
 - **The pre-boot menu may only show "Continue boot" (or just "Boot").** Tap anywhere on the screen, or
   press any button except power, to show the other options.
-- **The kernel version string is not final.** Early releases such as `0.9-PRIMARY` do not show their own
+- **The kernel version string is not final.** Early releases such as `0.9.0-PRIMARY` do not show their own
   name when booting yet. The kernel still reports itself as `6.15.0-rc1-exynos7870-dirty`: it inherits that
   suffix from the base tree, and `-dirty` means it was built from a tree with uncommitted changes. It will be
   renamed.
