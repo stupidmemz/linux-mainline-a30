@@ -32,12 +32,11 @@ In theory any arm64 distro with a downloadable rootfs should work. So far an Ope
 (it reaches a text login) and a systemd rootfs both start their init. None has a working desktop yet.
 
 ## Quick install (temporary instructions)
-1. **Read
 
-2. **Back up first.** Read the warning at the bottom of this page. At minimum back up your current
+1. **Back up first.** Read the warning at the bottom of this page. At minimum back up your current
    `boot` partition (in TWRP: Backup, tick Boot only), and keep a copy off the phone.
-3. Download the boot image (`.img`) from the **Releases** section and copy it to the phone.
-4. Boot into TWRP (other recoveries may work, but they are untested) and flash it:
+2. Download the boot image (`.img`) from the **Releases** section and copy it to the phone.
+3. Boot into TWRP (other recoveries may work, but they are untested) and flash it:
 
 ```
 TWRP -> Install -> Install Image -> (the Linux boot image) -> select the "Boot" partition -> swipe to flash
