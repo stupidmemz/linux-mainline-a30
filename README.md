@@ -65,7 +65,7 @@ To go back to Android, flash your backed-up `boot.img` the same way (select the 
 | Bootloader | unlocked, vbmeta patched, TWRP installed |
 | Android ROM on the phone | unofficial LineageOS 23.2 (Android 16), `/data` is plain unencrypted ext4 |
 
-Other Exynos 7885 phones and other ROMs are **untested**.
+Other ROMs are **untested**.
 
 ## Status
 
