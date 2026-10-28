@@ -136,14 +136,30 @@ The Linux root filesystem lives in a folder on Android's `userdata` partition (`
 so there is no repartitioning. This needs `/data` to be readable from Linux, so it must **not be encrypted**.
 ROMs that encrypt `/data` are untested and probably will not work.
 
-Unpack the rootfs with **real `tar` as root** (for example from Termux with root):
+You will need to make termux have root permissions and type `tsu` or `su`
+i recommend `tsu` because it's far easier to use
 
 ```
-tar -xpf rootfs.tar.gz -C /data/linux/rootfs --numeric-owner
+tsu --> mkdir /data/linux/rootfs
+
 ```
+Install tar with
+```
+pkg install tar
+
+```
+Unpack the rootfs with **real `tar` as root** (for example from Termux with root)
+then put your rootfs in "Download"
+
+```
+tar -xzf /data/media/0/Download/YOURROOTFS.tar.gz -C /data/linux/rootfs --numeric-owner
+```
+Replace "YOURROOTFS" with the actual rootfs name
 
 Do **not** unpack it with a file manager or an archive app. They refuse or rewrite symlinks
 ("dangerous symbolic links") and cannot keep root ownership, which silently breaks the rootfs.
+
+Simply boot the kernel kernel and continue the boot.
 
 ## Hardware notes
 
