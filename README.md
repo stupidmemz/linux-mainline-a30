@@ -199,7 +199,7 @@ The kernel will carry that tag in its version string.
 - **HenriDellal**: the `linux-exynos7885` kernel tree this is based on (`exynos7885-base`, around Linux 6.15-rc1)
 - **VDavid003**: the Exynos 7885 mainline patches that tree builds on
 - **ivoszbg / uniLoader** and **faveoled**, who wrote the A30 board file
-- **The postmarketOS Exynos 7885 mainlining notes**, which this whole approach follows
+- **The postmarketOS/Nura Exynos 7885 mainlining notes**, which this whole approach follows
 - **Eureka kernel** (Samsung downstream source): used as a reference for the device tree, the touch protocol and the hardware wiring
 - **Claude AI** For fixing bugs i cannot fix for the life of me, drivers and planning
 
